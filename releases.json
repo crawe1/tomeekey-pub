@@ -1,0 +1,11 @@
+[
+    {
+        "version":  "0.11.0",
+        "security_version":  6,
+        "date":  "2026-09-28",
+        "file":  "firmware/0.11.0/tomee-key-0.11.0.bin",
+        "sha256":  "63376099bf62a65e2edb72a269718a7667d36ea7cfce558d71072c63311beec5",
+        "notes":  "FIDO2 / CTAP 2.1: passkeys, PIN, hmac-secret, credProtect, podpisane aktualizacje, interfejs Tomee Management",
+        "source_commit":  "868d288"
+    }
+]
