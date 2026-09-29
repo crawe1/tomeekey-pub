@@ -1,5 +1,14 @@
 [
     {
+        "version":  "0.12.0",
+        "security_version":  6,
+        "date":  "2026-09-29",
+        "file":  "firmware/0.12.0/tomee-key-0.12.0.bin",
+        "sha256":  "a3e58f19199e59bb54e77e87cd6a4edc65904af82422af56529dcd2a7681591b",
+        "notes":  "Kody TOTP/HOTP (do 56 kont, SHA1/SHA256, opcjonalny dotyk); wymaga Tomee Manager z zakładką Kody",
+        "source_commit":  "802164a"
+    },
+    {
         "version":  "0.11.0",
         "security_version":  6,
         "date":  "2026-09-28",
