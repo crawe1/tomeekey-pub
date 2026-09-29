@@ -1,5 +1,14 @@
 [
     {
+        "version":  "0.13.0",
+        "security_version":  6,
+        "date":  "2026-09-29",
+        "file":  "firmware/0.13.0/tomee-key-0.13.0.bin",
+        "sha256":  "f95e605de743ccf2998c49075bd90b92f1f0461b737b90caa79f8270c23d0c27",
+        "notes":  "Wpisywanie kodów dotykiem: 1, 2, 3 dotknięcia lub przytrzymanie wpisują kod przypisanego konta, 4 dotknięcia powtarzają ostatni kod (przypisanie w Tomee Manager, zakładka Kody)",
+        "source_commit":  "cdfa84e"
+    },
+    {
         "version":  "0.12.0",
         "security_version":  6,
         "date":  "2026-09-29",
