@@ -1,5 +1,14 @@
 [
     {
+        "version":  "0.14.1",
+        "security_version":  6,
+        "date":  "2026-09-30",
+        "file":  "firmware/0.14.1/tomee-key-0.14.1.bin",
+        "sha256":  "b912945991ea0ee2d11b70f46fa6bb04c646fd1db0fb4ca7c92179ce1294e288",
+        "notes":  "Bezpieczniejszy dotyk: przytrzymanie wpisuje kod dopiero po puszczeniu palca (1,5–5 s, zielona dioda szybko miga), przedmiot lub kropla wody na polu dotykowym jest po 10 s ignorowana, lepsze wykrywanie szybkich stuknięć; ochrona zapisu przy spadku napięcia zasilania",
+        "source_commit":  "6ff0ab7"
+    },
+    {
         "version":  "0.13.0",
         "security_version":  6,
         "date":  "2026-09-29",
