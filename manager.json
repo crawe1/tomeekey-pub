@@ -1,5 +1,13 @@
 [
     {
+        "version":  "0.3.0",
+        "date":  "2026-09-30",
+        "file":  "manager/0.3.0/TomeeManager-0.3.0.exe",
+        "sha256":  "07438617857d7b7a320af8c919d0b64dfb30ad97e7e94753d4118a295c2a8ea8",
+        "notes":  "Kody TOTP (zakładka Kody), wpisywanie kodów gestami dotyku, praca w tle przy zegarze i autostart z Windows, automatyczne ustawianie czasu na kluczu, aktualizacje aplikacji",
+        "source_commit":  "40d77eb"
+    },
+    {
         "version":  "0.2.0",
         "date":  "2026-09-29",
         "file":  "manager/0.2.0/TomeeManager-0.2.0.exe",

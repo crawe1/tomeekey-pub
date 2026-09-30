@@ -6,12 +6,13 @@ Pliki do pobrania dla klucza zabezpieczeń Tomee Key.
 
 Aplikacja do zarządzania kluczem: PIN, passkeys, klucze SSH i aktualizacje firmware. Nie wymaga instalacji ani uprawnień administratora — pobierz plik `.exe` i uruchom.
 
-**Najnowsza wersja: [0.2.0](manager/0.2.0/TomeeManager-0.2.0.exe)** (2026-09-29)
+**Najnowsza wersja: [0.3.0](manager/0.3.0/TomeeManager-0.3.0.exe)** (2026-09-30)
 
 Plik nie ma jeszcze cyfrowego podpisu wydawcy, więc Windows SmartScreen może wyświetlić ostrzeżenie („Więcej informacji” → „Uruchom mimo to”). Przed uruchomieniem możesz porównać sumę SHA-256 z tabelą.
 
 | Wersja | Data | SHA-256 | Zmiany |
 |---|---|---|---|
+| [0.3.0](manager/0.3.0/TomeeManager-0.3.0.exe) | 2026-09-30 | `07438617857d7b7a…` | Kody TOTP (zakładka Kody), wpisywanie kodów gestami dotyku, praca w tle przy zegarze i autostart z Windows, automatyczne ustawianie czasu na kluczu, aktualizacje aplikacji |
 | [0.2.0](manager/0.2.0/TomeeManager-0.2.0.exe) | 2026-09-29 | `a6d3da7fd71eddcf…` | Pierwsze wydanie: informacje o kluczu, PIN, passkeys, klucze SSH, aktualizacje firmware z internetu, reset |
 
 ## Firmware
