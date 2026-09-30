@@ -4,6 +4,8 @@ Pliki do pobrania dla klucza zabezpieczeń Tomee Key.
 
 **Jak zacząć i jak używać klucza: [INSTRUKCJA.md](INSTRUKCJA.md)** · [wersja PDF do wydruku](INSTRUKCJA.pdf)
 
+Parametry, standardy i architektura bezpieczeństwa: [SPECYFIKACJA.md](SPECYFIKACJA.md) · [wersja PDF](SPECYFIKACJA.pdf)
+
 ## Tomee Manager (Windows)
 
 Aplikacja do zarządzania kluczem: PIN, passkeys, klucze SSH i aktualizacje firmware. Nie wymaga instalacji ani uprawnień administratora — pobierz plik `.exe` i uruchom.

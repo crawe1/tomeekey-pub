@@ -1,5 +1,7 @@
 # Tomee Key — instrukcja użytkownika
 
+<!-- okladka: docs/img/kody.png -->
+
 **Tomee Key** to sprzętowy klucz bezpieczeństwa USB. Zastępuje hasła i kody SMS: do serwisów
 logujesz się dotykiem klucza, a tam, gdzie potrzebny jest kod jednorazowy, klucz sam go wpisuje.
 Do zarządzania kluczem służy bezpłatna aplikacja **Tomee Manager** dla Windows.
@@ -35,6 +37,7 @@ Do zarządzania kluczem służy bezpłatna aplikacja **Tomee Manager** dla Windo
 - **PIN** — chroni konta, gdyby klucz wpadł w niepowołane ręce.
 - **Aktualizacje przez internet** — nowy firmware i nowa wersja aplikacji instalują się jednym kliknięciem.
 
+<!-- nowa-strona -->
 ## 2. Technologie i bezpieczeństwo
 
 Tomee Key opiera się na otwartych standardach branżowych, tych samych, których używają duże serwisy internetowe
@@ -85,6 +88,7 @@ i systemy operacyjne.
 | **Klucze SSH** | OpenSSH 8.9 lub nowszy (wbudowany w Windows 11; w Windows 10 może wymagać aktualizacji OpenSSH) |
 | **Połączenie** | port USB komputera; najlepiej bezpośrednio, bez rozgałęźnika |
 
+<!-- nowa-strona -->
 ## 4. Pierwsze uruchomienie
 
 1. Pobierz **Tomee Manager** (plik `.exe`) ze strony
@@ -126,6 +130,7 @@ albo je usunąć — usunięcie jest nieodwracalne, więc najpierw usuń klucz w
 
 *Rys. 3. Zakładka Passkeys: konta zapisane w kluczu, pogrupowane według serwisów, z poziomem ochrony.*
 
+<!-- nowa-strona -->
 ## 6. Kody jednorazowe (TOTP)
 
 Tomee Key zastępuje aplikację z kodami w telefonie (Google Authenticator, Microsoft Authenticator itp.).
