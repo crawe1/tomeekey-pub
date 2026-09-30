@@ -2,7 +2,7 @@
 
 Pliki do pobrania dla klucza zabezpieczeń Tomee Key.
 
-**Jak zacząć i jak używać klucza: [INSTRUKCJA.md](INSTRUKCJA.md)**
+**Jak zacząć i jak używać klucza: [INSTRUKCJA.md](INSTRUKCJA.md)** · [wersja PDF do wydruku](INSTRUKCJA.pdf)
 
 ## Tomee Manager (Windows)
 
