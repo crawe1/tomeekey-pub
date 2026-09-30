@@ -10,7 +10,7 @@ Do zarządzania kluczem służy bezpłatna aplikacja **Tomee Manager** dla Windo
 > jako **dodatkowy** sposób logowania i zachowaj dotychczasowy (telefon, kody zapasowe).
 > Uwagi i problemy zgłaszaj na **biuro@tomee.pl**.
 
-*Dotyczy: firmware 0.13.0 · Tomee Manager 0.3.0 · wrzesień 2026*
+*Dotyczy: firmware 0.14.1 · Tomee Manager 0.3.0 · wrzesień 2026*
 
 ## Spis treści
 
@@ -164,8 +164,10 @@ Tomee Key zastępuje aplikację z kodami w telefonie (Google Authenticator, Micr
 | Gest | Działanie |
 |---|---|
 | 1, 2 lub 3 dotknięcia | wpisuje kod konta przypisanego do tego gestu |
-| przytrzymanie (ok. 2 s) | wpisuje kod konta przypisanego do przytrzymania |
+| przytrzymanie 1,5–5&nbsp;s | gdy zielona dioda zacznie szybko migać, puść palec — wpisze się kod konta przypisanego do przytrzymania |
 | 4 dotknięcia | wpisuje ostatni kod jeszcze raz (np. gdy trafił w złe pole) |
+
+Palec trzymany dłużej niż 5 s niczego nie wpisuje, a przedmiot lub kropla wody na polu dotykowym zostaje po 10 s zignorowana — klucz nie wpisze kodu bez Twojego gestu.
 
 ![Tomee Manager — zakładka Kody](docs/img/kody.png)
 
@@ -209,6 +211,7 @@ Tomee Manager sam sprawdza nowe wersje:
 | czerwona miga szybko przez ok. 3 s po podłączeniu | klucz się uruchamia — nie dotykaj go |
 | zielona świeci | dotykasz klucza |
 | zielona miga | klucz czeka na dotknięcie (logowanie, rejestracja, aktualizacja) |
+| zielona miga bardzo szybko, gdy trzymasz palec | przytrzymanie rozpoznane — puść palec, a kod się wpisze |
 | 2 zielone mrugnięcia | kod został wpisany |
 | 3 czerwone mrugnięcia | kod nie został wpisany: gest nie ma przypisanego konta albo Tomee Manager nie działa |
 | czerwona i zielona na zmianę | „Zidentyfikuj klucz” w aplikacji albo instalacja aktualizacji |
@@ -241,7 +244,7 @@ Tomee Manager sam sprawdza nowe wersje:
 | Interfejs | USB 2.0 Full Speed, klasa HID (bez sterowników): FIDO, zarządzanie, klawiatura |
 | Obsługa | pojemnościowe pole dotykowe, dwie diody (czerwona i zielona) |
 | Aktualizacje | podpisane obrazy (ECDSA P-256 + SHA-256), ochrona przed cofnięciem wersji |
-| Oprogramowanie | firmware 0.13.0, Tomee Manager 0.3.0 dla Windows 10/11 |
+| Oprogramowanie | firmware 0.14.1, Tomee Manager 0.3.0 dla Windows 10/11 |
 
 ## 12. Kontakt
 

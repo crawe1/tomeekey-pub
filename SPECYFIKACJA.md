@@ -9,7 +9,7 @@ bezpieczeństwa urządzenia oraz aplikacji Tomee Manager.
 > **Program pilotażowy.** Specyfikacja dotyczy serii testowej. Parametry wersji produkcyjnej mogą się różnić —
 > ograniczenia serii pilotażowej zebrano w rozdziale [Status i plan rozwoju](#12-status-i-plan-rozwoju).
 
-*Dotyczy: firmware 0.13.0 · Tomee Manager 0.3.0 · wrzesień 2026*
+*Dotyczy: firmware 0.14.1 · Tomee Manager 0.3.0 · wrzesień 2026*
 
 ## Spis treści
 
@@ -109,6 +109,11 @@ stronie nie jest ważny w prawdziwym serwisie (ochrona przed phishingiem).
 **Obecność użytkownika.** Rejestracja, logowanie, reset i aktualizacja wymagają dotknięcia klucza (limit 30 s).
 Reset do ustawień fabrycznych jest możliwy tylko w ciągu 10 s od podłączenia i po dotknięciu.
 
+**Czujnik dotyku.** Pojemnościowe pole z kalibracją przy starcie i śledzeniem dryfu otoczenia. Palec, który leżał
+na polu przed żądaniem, musi się najpierw oderwać — dopiero kolejne dotknięcie potwierdza operację. „Dotyk”
+trwający ponad 10 s (kropla wody, oparty przedmiot) powoduje ponowną kalibrację i jest ignorowany. Szum czujnika
+w pomiarach na prototypie: σ ≈ 1,5 jednostki przy progu ok. 350 i sygnale dotyku 600–3000 (także mokrym palcem).
+
 **Ochrona kont.** Rozszerzenie credProtect ukrywa wybrane konta przed osobą, która nie zna PIN-u.
 Konta rezydentne (passkeys) są widoczne i zarządzalne tylko po podaniu PIN-u.
 
@@ -120,10 +125,12 @@ aplikacja działa bez uprawnień administratora, a przejęty proces aplikacji ni
 wyłącznie gotowe kody. Dodawanie, usuwanie i zmiana gestów wymagają PIN-u, jeśli jest ustawiony.
 
 **Wpisywanie kodów.** Interfejs klawiatury wysyła wyłącznie cyfry kodu i opcjonalnie klawisz Enter, tylko po
-geście wykonanym na kluczu.
+geście wykonanym na kluczu. Przytrzymanie wpisuje kod dopiero po puszczeniu palca, a gesty są wstrzymane
+przez 1 s po uruchomieniu i po błędzie czujnika.
 
 **Pamięć trwała.** Konta, kody, PIN i licznik podpisów są zapisywane w sposób odporny na zanik zasilania — przerwany
-zapis nie uszkadza wcześniej zapisanych danych.
+zapis nie uszkadza wcześniej zapisanych danych. Klucz nie rozpoczyna zapisu, gdy napięcie zasilania spada poniżej
+ok. 2,8 V (detektor PVD). Test: 15 odłączeń klucza w trakcie zapisu, 2306 zapisów — bez utraty danych.
 
 ## 5. Sprzęt
 
@@ -175,6 +182,7 @@ Dane użytkownika (konta, kody, PIN) są zachowywane przy aktualizacjach firmwar
 | Okres TOTP | 1–3600 s (w Tomee Manager: 10–300 s, domyślnie 30 s) |
 | Wymóg dotknięcia | opcjonalny, dla każdego konta osobno |
 | Gesty | 1, 2 lub 3 dotknięcia oraz przytrzymanie — po jednym koncie na gest |
+| Przytrzymanie | 1,5–5 s, kod wpisywany po puszczeniu (szybkie miganie zielonej diody); dłuższe nic nie wpisuje |
 | Powtórzenie kodu | 4 dotknięcia wpisują ostatni kod ponownie (przez 90 s) |
 | Zatwierdzenie | opcjonalny klawisz Enter po kodzie |
 | Źródło czasu | Tomee Manager ustawia czas przy każdym podłączeniu; klucz odmierza go dalej z taktów magistrali USB |
