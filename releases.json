@@ -1,5 +1,14 @@
 [
     {
+        "version":  "0.14.4",
+        "security_version":  6,
+        "date":  "2026-10-02",
+        "file":  "firmware/0.14.4/tomee-key-0.14.4.bin",
+        "sha256":  "2acc6a435f3024e72edaeb2ee3f77e180708440084f5c194a4f217c69c64bcd6",
+        "notes":  "Stabilność: poprawne opóźnienia odczytu pamięci Flash przy zegarze 16 MHz (zgodnie ze specyfikacją producenta układu); bootloader nowych kluczy dwukrotnie sprawdza podpis firmware (odporność na zakłócenia) i uruchamia się szybciej",
+        "source_commit":  "8d8b190"
+    },
+    {
         "version":  "0.14.3",
         "security_version":  6,
         "date":  "2026-10-02",
