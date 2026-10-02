@@ -9,7 +9,7 @@ bezpieczeństwa urządzenia oraz aplikacji Tomee Manager.
 > **Program pilotażowy.** Specyfikacja dotyczy serii testowej. Parametry wersji produkcyjnej mogą się różnić —
 > ograniczenia serii pilotażowej zebrano w rozdziale [Status i plan rozwoju](#12-status-i-plan-rozwoju).
 
-*Dotyczy: firmware 0.14.1 · Tomee Manager 0.3.0 · wrzesień 2026*
+*Dotyczy: firmware 0.14.3 · Tomee Manager 0.3.0 · październik 2026*
 
 ## Spis treści
 
@@ -129,8 +129,14 @@ geście wykonanym na kluczu. Przytrzymanie wpisuje kod dopiero po puszczeniu pal
 przez 1 s po uruchomieniu i po błędzie czujnika.
 
 **Pamięć trwała.** Konta, kody, PIN i licznik podpisów są zapisywane w sposób odporny na zanik zasilania — przerwany
-zapis nie uszkadza wcześniej zapisanych danych. Klucz nie rozpoczyna zapisu, gdy napięcie zasilania spada poniżej
-ok. 2,8 V (detektor PVD). Test: 15 odłączeń klucza w trakcie zapisu, 2306 zapisów — bez utraty danych.
+zapis nie uszkadza wcześniej zapisanych danych, a zamiana rekordu przerwana wyjęciem klucza jest dokańczana przy
+następnym uruchomieniu, więc kod HOTP nigdy nie jest wydany dwa razy. Klucz nie rozpoczyna zapisu, gdy napięcie
+zasilania spada poniżej ok. 2,8 V (detektor PVD). Testy: 30 wyjęć klucza w trakcie zapisu kodów (3586 zapisów)
+i 15 w trakcie zapisu passkeys (929 zamian) — bez utraty ani zdublowania danych.
+
+**Ochrona oprogramowania przed zapisem.** Każdy zapis i kasowanie pamięci Flash jest sprawdzany pod kątem zakresu;
+aplikacja przy starcie blokuje dla siebie obszar bootloadera i własnego obrazu, więc żaden błąd osiągalny przez
+USB nie może ich zmienić. Aktualizację instaluje wyłącznie bootloader, po sprawdzeniu podpisu.
 
 ## 5. Sprzęt
 
