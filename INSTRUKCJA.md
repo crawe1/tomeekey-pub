@@ -10,7 +10,7 @@ Do zarządzania kluczem służy bezpłatna aplikacja **Tomee Manager** dla Windo
 > jako **dodatkowy** sposób logowania i zachowaj dotychczasowy (telefon, kody zapasowe).
 > Uwagi i problemy zgłaszaj na **biuro@tomee.pl**.
 
-*Dotyczy: firmware 0.14.3 · Tomee Manager 0.3.0 · październik 2026*
+*Dotyczy: firmware 0.14.4 · Tomee Manager 0.3.0 · październik 2026*
 
 ## Spis treści
 
@@ -244,7 +244,7 @@ Tomee Manager sam sprawdza nowe wersje:
 | Interfejs | USB 2.0 Full Speed, klasa HID (bez sterowników): FIDO, zarządzanie, klawiatura |
 | Obsługa | pojemnościowe pole dotykowe, dwie diody (czerwona i zielona) |
 | Aktualizacje | podpisane obrazy (ECDSA P-256 + SHA-256), ochrona przed cofnięciem wersji |
-| Oprogramowanie | firmware 0.14.3, Tomee Manager 0.3.0 dla Windows 10/11 |
+| Oprogramowanie | firmware 0.14.4, Tomee Manager 0.3.0 dla Windows 10/11 |
 
 ## 12. Kontakt
 

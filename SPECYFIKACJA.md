@@ -9,7 +9,7 @@ bezpieczeństwa urządzenia oraz aplikacji Tomee Manager.
 > **Program pilotażowy.** Specyfikacja dotyczy serii testowej. Parametry wersji produkcyjnej mogą się różnić —
 > ograniczenia serii pilotażowej zebrano w rozdziale [Status i plan rozwoju](#12-status-i-plan-rozwoju).
 
-*Dotyczy: firmware 0.14.3 · Tomee Manager 0.3.0 · październik 2026*
+*Dotyczy: firmware 0.14.4 · Tomee Manager 0.3.0 · październik 2026*
 
 ## Spis treści
 
@@ -199,7 +199,8 @@ Dane użytkownika (konta, kody, PIN) są zachowywane przy aktualizacjach firmwar
 |---|---|
 | Architektura | bootloader (32 KB) + aplikacja w osobnym obszarze pamięci |
 | Format obrazu | nagłówek z podpisem ECDSA P-256, skrótem SHA-256 i wersją bezpieczeństwa |
-| Weryfikacja | podpis i skrót sprawdzane przed instalacją i przy każdym uruchomieniu |
+| Weryfikacja | podpis i skrót sprawdzane przed instalacją i przy każdym uruchomieniu — w bootloaderze od 0.14.4 dwukrotnie, z losowym odstępem (odporność na zakłócenia) |
+| Nieudana instalacja | gdy instalacja nie może się rozpocząć, klucz uruchamia dotychczasowy firmware i ponawia próbę przy kolejnym starcie |
 | Ochrona przed cofnięciem wersji | klucz odrzuca obraz z niższą wersją bezpieczeństwa niż zainstalowana |
 | Instalacja | obraz trafia najpierw do obszaru tymczasowego (do 176 KB), kopiowanie po pełnej weryfikacji |
 | Potwierdzenie | dotknięcie klucza przed rozpoczęciem aktualizacji |
