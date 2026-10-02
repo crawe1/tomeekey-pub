@@ -1,5 +1,14 @@
 [
     {
+        "version":  "0.14.3",
+        "security_version":  6,
+        "date":  "2026-10-02",
+        "file":  "firmware/0.14.3/tomee-key-0.14.3.bin",
+        "sha256":  "e8d517f65b73b8ec67ff7aafa53f6179876ce6c1fc7413f3fe79522be65f8859",
+        "notes":  "Niezawodność zapisu: kod HOTP nie może zostać wydany dwa razy, a passkey nie zostaje zdublowany po wyjęciu klucza w trakcie zapisu; zapis do obszaru bootloadera i firmware zablokowany w aplikacji; kontrola zakresu każdego zapisu do pamięci Flash",
+        "source_commit":  "38419ed"
+    },
+    {
         "version":  "0.14.1",
         "security_version":  6,
         "date":  "2026-09-30",

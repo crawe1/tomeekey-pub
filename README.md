@@ -25,6 +25,7 @@ Podpisane obrazy firmware. Tomee Manager sam sprawdza nowe wersje i proponuje in
 
 | Wersja | Wersja bezpieczeństwa | Data | SHA-256 | Zmiany |
 |---|---|---|---|---|
+| [0.14.3](firmware/0.14.3/tomee-key-0.14.3.bin) | 6 | 2026-10-02 | `e8d517f65b73b8ec…` | Niezawodność zapisu: kod HOTP nie może zostać wydany dwa razy, a passkey nie zostaje zdublowany po wyjęciu klucza w trakcie zapisu; zapis do obszaru bootloadera i firmware zablokowany w aplikacji; kontrola zakresu każdego zapisu do pamięci Flash |
 | [0.14.1](firmware/0.14.1/tomee-key-0.14.1.bin) | 6 | 2026-09-30 | `b912945991ea0ee2…` | Bezpieczniejszy dotyk: przytrzymanie wpisuje kod dopiero po puszczeniu palca (1,5–5 s, zielona dioda szybko miga), przedmiot lub kropla wody na polu dotykowym jest po 10 s ignorowana, lepsze wykrywanie szybkich stuknięć; ochrona zapisu przy spadku napięcia zasilania |
 | [0.13.0](firmware/0.13.0/tomee-key-0.13.0.bin) | 6 | 2026-09-29 | `f95e605de743ccf2…` | Wpisywanie kodów dotykiem: 1, 2, 3 dotknięcia lub przytrzymanie wpisują kod przypisanego konta, 4 dotknięcia powtarzają ostatni kod (przypisanie w Tomee Manager, zakładka Kody) |
 | [0.12.0](firmware/0.12.0/tomee-key-0.12.0.bin) | 6 | 2026-09-29 | `a3e58f19199e59bb…` | Kody TOTP/HOTP (do 56 kont, SHA1/SHA256, opcjonalny dotyk); wymaga Tomee Manager z zakładką Kody |
