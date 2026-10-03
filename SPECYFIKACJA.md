@@ -256,6 +256,22 @@ Seria pilotażowa ma następujące ograniczenia:
 Planowane w wersji produkcyjnej: włączenie blokady pamięci i izolacji TrustZone, atestacja z certyfikatem
 producenta, obsługa U2F, certyfikacja FIDO oraz podpisana cyfrowo aplikacja.
 
+**Postęp prac nad izolacją TrustZone** (stan na 3 października 2026, egzemplarz testowy — jeszcze nie w firmware
+do pobrania). Mikrokontroler dzieli pamięć i kod na strefę bezpieczną i zwykłą; kod strefy zwykłej (obsługa USB
+i poleceń) nie ma dostępu do danych strefy bezpiecznej, nawet gdyby zawierał błąd:
+
+| Etap | Zakres | Stan |
+|---|---|---|
+| 1 | bootloader i weryfikacja podpisu firmware w strefie bezpiecznej | zakończony |
+| 2 | klucz urządzenia, klucze prywatne kont i podpisy w strefie bezpiecznej — aplikacja dostaje tylko gotowe podpisy | zakończony |
+| 3 | PIN, licznik prób, token PIN i rozszerzenie hmac-secret w strefie bezpiecznej | zakończony |
+| 4 | sekrety kodów jednorazowych w strefie bezpiecznej | w przygotowaniu |
+| 5 | ochrona zapisu i ukrycie strefy bezpiecznej, blokada odczytu pamięci, aktualizacje strefy bezpiecznej | planowany |
+| 6 | przeniesienie danych kluczy już używanych (konta, PIN, kody) do nowej wersji | planowany |
+
+Każdy etap przechodzi pełny zestaw testów (FIDO2, PIN, passkeys, kody, gesty, aktualizacje, wyjmowanie klucza
+w trakcie zapisu, testy losowymi danymi). Po etapach 2 i 3 dotychczasowe konta i PIN działały bez zmian.
+
 ## 13. Kontakt
 
 Pytania techniczne i zgłoszenia: **biuro@tomee.pl**.
