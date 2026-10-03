@@ -265,12 +265,12 @@ i poleceń) nie ma dostępu do danych strefy bezpiecznej, nawet gdyby zawierał 
 | 1 | bootloader i weryfikacja podpisu firmware w strefie bezpiecznej | zakończony |
 | 2 | klucz urządzenia, klucze prywatne kont i podpisy w strefie bezpiecznej — aplikacja dostaje tylko gotowe podpisy | zakończony |
 | 3 | PIN, licznik prób, token PIN i rozszerzenie hmac-secret w strefie bezpiecznej | zakończony |
-| 4 | sekrety kodów jednorazowych w strefie bezpiecznej | w przygotowaniu |
-| 5 | ochrona zapisu i ukrycie strefy bezpiecznej, blokada odczytu pamięci, aktualizacje strefy bezpiecznej | planowany |
+| 4 | sekrety kodów jednorazowych w strefie bezpiecznej — aplikacja przechowuje tylko zaszyfrowane dane i dostaje gotowe kody | zakończony |
+| 5 | ochrona zapisu i ukrycie strefy bezpiecznej, blokada odczytu pamięci, aktualizacje strefy bezpiecznej | w przygotowaniu |
 | 6 | przeniesienie danych kluczy już używanych (konta, PIN, kody) do nowej wersji | planowany |
 
 Każdy etap przechodzi pełny zestaw testów (FIDO2, PIN, passkeys, kody, gesty, aktualizacje, wyjmowanie klucza
-w trakcie zapisu, testy losowymi danymi). Po etapach 2 i 3 dotychczasowe konta i PIN działały bez zmian.
+w trakcie zapisu, testy losowymi danymi). Po etapach 2–4 dotychczasowe konta, PIN i kody działały bez zmian.
 
 ## 13. Kontakt
 
