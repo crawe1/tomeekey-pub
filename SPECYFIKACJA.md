@@ -266,7 +266,8 @@ i poleceń) nie ma dostępu do danych strefy bezpiecznej, nawet gdyby zawierał 
 | 2 | klucz urządzenia, klucze prywatne kont i podpisy w strefie bezpiecznej — aplikacja dostaje tylko gotowe podpisy | zakończony |
 | 3 | PIN, licznik prób, token PIN i rozszerzenie hmac-secret w strefie bezpiecznej | zakończony |
 | 4 | sekrety kodów jednorazowych w strefie bezpiecznej — po dodaniu konta aplikacja przechowuje tylko zaszyfrowany sekret i nie ma klucza, by go odczytać | zakończony |
-| 5 | ochrona zapisu i ukrycie strefy bezpiecznej, blokada odczytu pamięci, aktualizacje strefy bezpiecznej | w przygotowaniu |
+| 5 | aktualizacje strefy bezpiecznej przez USB (podpisane, z osobną wersją bezpieczeństwa) | zakończony |
+| 5b | ochrona zapisu i ukrycie części startowej, blokada odczytu pamięci | w przygotowaniu |
 | 6 | przeniesienie danych kluczy już używanych (konta, PIN, kody) do nowej wersji | planowany |
 
 Każdy etap przechodzi pełny zestaw testów (FIDO2, PIN, passkeys, kody, gesty, aktualizacje, wyjmowanie klucza
