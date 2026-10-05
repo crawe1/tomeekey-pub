@@ -32,4 +32,13 @@ Podpisane obrazy firmware. Tomee Manager sam sprawdza nowe wersje i proponuje in
 | [0.12.0](firmware/0.12.0/tomee-key-0.12.0.bin) | 6 | 2026-09-29 | `a3e58f19199e59bb…` | Kody TOTP/HOTP (do 56 kont, SHA1/SHA256, opcjonalny dotyk); wymaga Tomee Manager z zakładką Kody |
 | [0.11.0](firmware/0.11.0/tomee-key-0.11.0.bin) | 6 | 2026-09-28 | `63376099bf62a65e…` | FIDO2 / CTAP 2.1: passkeys, PIN, hmac-secret, credProtect, podpisane aktualizacje, interfejs Tomee Management |
 
+## Firmware z izolacją TrustZone (od 0.15.0)
+
+Klucze z izolacją TrustZone (od wersji 0.15.0) mają dwa osobno aktualizowane obrazy: aplikację i usługi bezpieczne, każdy z własną wersją bezpieczeństwa. Tomee Manager od wersji 0.4.0 rozpoznaje rodzaj klucza i proponuje właściwe pliki. Klucz bez TrustZone nie przyjmie tych obrazów, a klucz z TrustZone — obrazów z tabeli powyżej. Przejście istniejącego klucza na TrustZone wykonuje Tomee (dane zostają).
+
+| Wersja | Obraz | Wersja bezpieczeństwa | Data | SHA-256 | Zmiany |
+|---|---|---|---|---|---|
+| [0.15.0](firmware/0.15.0/tomee-key-services-0.15.0.bin) | usługi bezpieczne | 1 | 2026-10-05 | `b009d0c24fb00b7f…` | Izolacja TrustZone: klucz urządzenia, klucze kont, podpisy, PIN, hmac-secret i sekrety kodów jednorazowych działają w strefie bezpiecznej mikrokontrolera, a część startowa jest chroniona przed zapisem i ukrywana po uruchomieniu; usługi bezpieczne aktualizowane osobno; dla kluczy z TrustZone (wymaga Tomee Manager 0.4.0) |
+| [0.15.0](firmware/0.15.0/tomee-key-0.15.0.bin) | aplikacja | 6 | 2026-10-05 | `a25e379549b165db…` | Izolacja TrustZone: klucz urządzenia, klucze kont, podpisy, PIN, hmac-secret i sekrety kodów jednorazowych działają w strefie bezpiecznej mikrokontrolera, a część startowa jest chroniona przed zapisem i ukrywana po uruchomieniu; usługi bezpieczne aktualizowane osobno; dla kluczy z TrustZone (wymaga Tomee Manager 0.4.0) |
+
 Pełne sumy SHA-256 są w pliku `SHA256SUMS` w katalogu każdej wersji.

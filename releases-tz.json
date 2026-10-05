@@ -1,0 +1,22 @@
+[
+    {
+        "version":  "0.15.0",
+        "kind":  "services",
+        "security_version":  1,
+        "date":  "2026-10-05",
+        "file":  "firmware/0.15.0/tomee-key-services-0.15.0.bin",
+        "sha256":  "b009d0c24fb00b7ffaef6d6b81b2881cd37fbe73d932b0e996fc0b3b2f9fa61e",
+        "notes":  "Izolacja TrustZone: klucz urządzenia, klucze kont, podpisy, PIN, hmac-secret i sekrety kodów jednorazowych działają w strefie bezpiecznej mikrokontrolera, a część startowa jest chroniona przed zapisem i ukrywana po uruchomieniu; usługi bezpieczne aktualizowane osobno; dla kluczy z TrustZone (wymaga Tomee Manager 0.4.0)",
+        "source_commit":  "bc7d753"
+    },
+    {
+        "version":  "0.15.0",
+        "kind":  "app",
+        "security_version":  6,
+        "date":  "2026-10-05",
+        "file":  "firmware/0.15.0/tomee-key-0.15.0.bin",
+        "sha256":  "a25e379549b165db74ac0739d298ebeb4d6851d863645b29d6584a0a13985415",
+        "notes":  "Izolacja TrustZone: klucz urządzenia, klucze kont, podpisy, PIN, hmac-secret i sekrety kodów jednorazowych działają w strefie bezpiecznej mikrokontrolera, a część startowa jest chroniona przed zapisem i ukrywana po uruchomieniu; usługi bezpieczne aktualizowane osobno; dla kluczy z TrustZone (wymaga Tomee Manager 0.4.0)",
+        "source_commit":  "bc7d753"
+    }
+]
