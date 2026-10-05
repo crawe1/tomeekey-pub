@@ -9,7 +9,7 @@ bezpieczeństwa urządzenia oraz aplikacji Tomee Manager.
 > **Program pilotażowy.** Specyfikacja dotyczy serii testowej. Parametry wersji produkcyjnej mogą się różnić —
 > ograniczenia serii pilotażowej zebrano w rozdziale [Status i plan rozwoju](#12-status-i-plan-rozwoju).
 
-*Dotyczy: firmware 0.14.4 · Tomee Manager 0.3.0 · październik 2026*
+*Dotyczy: firmware 0.14.4 i 0.15.0 (z izolacją TrustZone) · Tomee Manager 0.4.0 · październik 2026*
 
 ## Spis treści
 
@@ -253,11 +253,11 @@ Seria pilotażowa ma następujące ograniczenia:
 - klucz nie ma własnego zegara — kody TOTP wpisywane gestem wymagają działającego Tomee Managera;
 - aplikacja Tomee Manager nie jest jeszcze podpisana cyfrowo (ostrzeżenie Windows SmartScreen).
 
-Planowane w wersji produkcyjnej: włączenie blokady pamięci i izolacji TrustZone, atestacja z certyfikatem
-producenta, obsługa U2F, certyfikacja FIDO oraz podpisana cyfrowo aplikacja.
+Planowane w wersji produkcyjnej: włączenie blokady odczytu pamięci, atestacja z certyfikatem producenta, obsługa U2F,
+certyfikacja FIDO oraz podpisana cyfrowo aplikacja.
 
-**Postęp prac nad izolacją TrustZone** (stan na 3 października 2026, egzemplarz testowy — jeszcze nie w firmware
-do pobrania). Mikrokontroler dzieli pamięć i kod na strefę bezpieczną i zwykłą; kod strefy zwykłej (obsługa USB
+**Izolacja TrustZone — od firmware 0.15.0** (5 października 2026). Klucze serii pilotażowej dostają ją przy
+przygotowaniu, a klucze już używane przechodzą na nią z zachowaniem danych. Mikrokontroler dzieli pamięć i kod na strefę bezpieczną i zwykłą; kod strefy zwykłej (obsługa USB
 i poleceń) nie ma dostępu do danych strefy bezpiecznej, nawet gdyby zawierał błąd:
 
 | Etap | Zakres | Stan |
@@ -269,10 +269,11 @@ i poleceń) nie ma dostępu do danych strefy bezpiecznej, nawet gdyby zawierał 
 | 5 | aktualizacje strefy bezpiecznej przez USB (podpisane, z osobną wersją bezpieczeństwa) | zakończony |
 | 5b | ochrona zapisu i ukrycie części startowej po uruchomieniu | zakończony |
 | 5c | blokada odczytu pamięci z izolacją TrustZone (sprawdzona na egzemplarzu testowym; włączana przy produkcji) | zakończony |
-| 6 | przeniesienie danych kluczy już używanych (konta, PIN, kody) do nowej wersji | planowany |
+| 6 | przeniesienie danych kluczy już używanych (konta, PIN, kody) do nowej wersji | zakończony |
 
 Każdy etap przechodzi pełny zestaw testów (FIDO2, PIN, passkeys, kody, gesty, aktualizacje, wyjmowanie klucza
-w trakcie zapisu, testy losowymi danymi). Po etapach 2–4 dotychczasowe konta, PIN i kody działały bez zmian.
+w trakcie zapisu, testy losowymi danymi). Po każdym etapie i po przeniesieniu danych dotychczasowe konta, PIN,
+passkeys i kody działały bez zmian.
 
 ## 13. Kontakt
 
