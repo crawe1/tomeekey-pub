@@ -1,5 +1,13 @@
 [
     {
+        "version":  "0.4.0",
+        "date":  "2026-10-05",
+        "file":  "manager/0.4.0/TomeeManager-0.4.0.exe",
+        "sha256":  "9af60a55e0bc68c2f01522c973b99e1dbbb98e160ca4a946ba4c00c24c5d3223",
+        "notes":  "Obsługa kluczy z izolacją TrustZone (firmware 0.15.0): Manager rozpoznaje rodzaj klucza, proponuje właściwe aktualizacje (aplikacja i usługi bezpieczne) i pokazuje wersję usług bezpiecznych; klucze bez TrustZone nadal dostają firmware 0.14.x",
+        "source_commit":  "898720b"
+    },
+    {
         "version":  "0.3.0",
         "date":  "2026-09-30",
         "file":  "manager/0.3.0/TomeeManager-0.3.0.exe",
