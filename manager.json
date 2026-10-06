@@ -1,5 +1,13 @@
 [
     {
+        "version":  "0.4.1",
+        "date":  "2026-10-06",
+        "file":  "manager/0.4.1/TomeeManager-0.4.1.exe",
+        "sha256":  "85e5d498682e48f579335a157fa356985688976a0317758d00606f434b9258b4",
+        "notes":  "Tomee Manager 0.4.1\n\nZakładka Kody prosi o PIN raz na sesję — od firmware 0.15.1 kody jednorazowe są chronione PIN-em, więc żaden program w tle nie odczyta ich po cichu. Wpisywanie kodów gestem dotyku działa jak dotąd, bez PIN-u. Drobne usprawnienia odporności połączenia.",
+        "source_commit":  "5f7894d"
+    },
+    {
         "version":  "0.4.0",
         "date":  "2026-10-05",
         "file":  "manager/0.4.0/TomeeManager-0.4.0.exe",
