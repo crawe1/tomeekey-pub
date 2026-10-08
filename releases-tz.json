@@ -1,16 +1,6 @@
 [
     {
         "version":  "0.15.1",
-        "kind":  "services",
-        "security_version":  1,
-        "date":  "2026-10-06",
-        "file":  "firmware/0.15.1/tomee-key-services-0.15.1.bin",
-        "sha256":  "402be18ce5dd63dc6d2c823aa6e2de59c6064c6c376f78516a08e585c7ae2a9a",
-        "notes":  "Tomee Key 0.15.1 — aktualizacja bezpieczeństwa kodów jednorazowych\n\nKody TOTP/HOTP można teraz odczytać przez komputer tylko po podaniu PIN-u do klucza albo po dotknięciu klucza. Program działający w tle nie pobierze już kodów po cichu — ani bieżących, ani „na zapas” na przyszłość. Wpisywanie kodów gestem dotyku działa bez zmian, a logowanie kluczem (FIDO/SSH) pozostaje bez zmian.\n\nZalecana aktualizacja. Do obsługi kodów w aplikacji potrzebny jest Tomee Manager 0.4.1 (starsze wersje nie pokażą kodów przy ustawionym PIN-ie).",
-        "source_commit":  "5f7894d"
-    },
-    {
-        "version":  "0.15.1",
         "kind":  "app",
         "security_version":  7,
         "date":  "2026-10-06",
