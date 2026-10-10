@@ -1,5 +1,14 @@
 [
     {
+        "version":  "0.4.2",
+        "date":  "2026-10-10",
+        "file":  "manager/0.4.2/TomeeManager-0.4.2.exe",
+        "sha256":  "ffddd2edf1e6351fa2fac96c79854fb2cb9985ad7f84bbb6d7b74108815a41e0",
+        "signature":  "ddc6b8d288857cebf932185365ba3ab450ae939f5afc600001992223adb9dc3f8c8476ff0a32f215624223b239ec7c2259da8def337dcc63a53e67c06ff99702",
+        "notes":  "Tomee Manager 0.4.2\n\nAktualizacje rozróżniają składniki klucza z TrustZone: przycisk i powiadomienie mówią wprost, czy aktualizowana jest aplikacja, czy usługi bezpieczne. Zakładki Klucz i Firmware pokazują osobno wersje obu składników oraz ich wersje bezpieczeństwa. Po odłączeniu klucza informacja o dostępnej aktualizacji jest czyszczona.",
+        "source_commit":  "bee7750"
+    },
+    {
         "version":  "0.4.1",
         "date":  "2026-10-06",
         "file":  "manager/0.4.1/TomeeManager-0.4.1.exe",

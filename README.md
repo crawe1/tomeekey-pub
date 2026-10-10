@@ -10,15 +10,14 @@ Parametry, standardy i architektura bezpieczeństwa: [SPECYFIKACJA.md](SPECYFIKA
 
 Aplikacja do zarządzania kluczem: PIN, passkeys, klucze SSH i aktualizacje firmware. Nie wymaga instalacji ani uprawnień administratora — pobierz plik `.exe` i uruchom.
 
-**Najnowsza wersja: [0.4.1](manager/0.4.1/TomeeManager-0.4.1.exe)** (2026-10-06)
+**Najnowsza wersja: [0.4.2](manager/0.4.2/TomeeManager-0.4.2.exe)** (2026-10-10)
 
 Plik nie ma jeszcze cyfrowego podpisu wydawcy, więc Windows SmartScreen może wyświetlić ostrzeżenie („Więcej informacji” → „Uruchom mimo to”). Przed uruchomieniem możesz porównać sumę SHA-256 z tabelą.
 
 | Wersja | Data | SHA-256 | Zmiany |
 |---|---|---|---|
-| [0.4.1](manager/0.4.1/TomeeManager-0.4.1.exe) | 2026-10-06 | `85e5d498682e48f5…` | Tomee Manager 0.4.1
-
-Zakładka Kody prosi o PIN raz na sesję — od firmware 0.15.1 kody jednorazowe są chronione PIN-em, więc żaden program w tle nie odczyta ich po cichu. Wpisywanie kodów gestem dotyku działa jak dotąd, bez PIN-u. Drobne usprawnienia odporności połączenia. |
+| [0.4.2](manager/0.4.2/TomeeManager-0.4.2.exe) | 2026-10-10 | `ffddd2edf1e6351f…` | Tomee Manager 0.4.2<br><br>Aktualizacje rozróżniają składniki klucza z TrustZone: przycisk i powiadomienie mówią wprost, czy aktualizowana jest aplikacja, czy usługi bezpieczne. Zakładki Klucz i Firmware pokazują osobno wersje obu składników oraz ich wersje bezpieczeństwa. Po odłączeniu klucza informacja o dostępnej aktualizacji jest czyszczona. |
+| [0.4.1](manager/0.4.1/TomeeManager-0.4.1.exe) | 2026-10-06 | `85e5d498682e48f5…` | Tomee Manager 0.4.1<br><br>Zakładka Kody prosi o PIN raz na sesję — od firmware 0.15.1 kody jednorazowe są chronione PIN-em, więc żaden program w tle nie odczyta ich po cichu. Wpisywanie kodów gestem dotyku działa jak dotąd, bez PIN-u. Drobne usprawnienia odporności połączenia. |
 | [0.4.0](manager/0.4.0/TomeeManager-0.4.0.exe) | 2026-10-05 | `9af60a55e0bc68c2…` | Obsługa kluczy z izolacją TrustZone (firmware 0.15.0): Manager rozpoznaje rodzaj klucza, proponuje właściwe aktualizacje (aplikacja i usługi bezpieczne) i pokazuje wersję usług bezpiecznych; klucze bez TrustZone nadal dostają firmware 0.14.x |
 | [0.3.0](manager/0.3.0/TomeeManager-0.3.0.exe) | 2026-09-30 | `07438617857d7b7a…` | Kody TOTP (zakładka Kody), wpisywanie kodów gestami dotyku, praca w tle przy zegarze i autostart z Windows, automatyczne ustawianie czasu na kluczu, aktualizacje aplikacji |
 | [0.2.0](manager/0.2.0/TomeeManager-0.2.0.exe) | 2026-09-29 | `a6d3da7fd71eddcf…` | Pierwsze wydanie: informacje o kluczu, PIN, passkeys, klucze SSH, aktualizacje firmware z internetu, reset |
@@ -40,18 +39,11 @@ Podpisane obrazy firmware. Tomee Manager sam sprawdza nowe wersje i proponuje in
 
 Klucze z izolacją TrustZone (od wersji 0.15.0) mają dwa osobno aktualizowane obrazy: aplikację i usługi bezpieczne, każdy z własną wersją bezpieczeństwa. Tomee Manager od wersji 0.4.0 rozpoznaje rodzaj klucza i proponuje właściwe pliki. Klucz bez TrustZone nie przyjmie tych obrazów, a klucz z TrustZone — obrazów z tabeli powyżej. Przejście istniejącego klucza na TrustZone wykonuje Tomee (dane zostają).
 
+Wersje firmware aplikacji i usług bezpiecznych mogą się różnić. Manager pokazuje oba numery w zakładkach Klucz i Firmware. Komunikat aktualizacji wskazuje składnik: „Aktualizacja firmware aplikacji do…” albo „Aktualizacja usług bezpiecznych do…”. Po instalacji Manager ponownie sprawdza aktualizacje; może być dostępny drugi składnik.
+
 | Wersja | Obraz | Wersja bezpieczeństwa | Data | SHA-256 | Zmiany |
 |---|---|---|---|---|---|
-| [0.15.1](firmware/0.15.1/tomee-key-services-0.15.1.bin) | usługi bezpieczne | 1 | 2026-10-06 | `402be18ce5dd63dc…` | Tomee Key 0.15.1 — aktualizacja bezpieczeństwa kodów jednorazowych
-
-Kody TOTP/HOTP można teraz odczytać przez komputer tylko po podaniu PIN-u do klucza albo po dotknięciu klucza. Program działający w tle nie pobierze już kodów po cichu — ani bieżących, ani „na zapas” na przyszłość. Wpisywanie kodów gestem dotyku działa bez zmian, a logowanie kluczem (FIDO/SSH) pozostaje bez zmian.
-
-Zalecana aktualizacja. Do obsługi kodów w aplikacji potrzebny jest Tomee Manager 0.4.1 (starsze wersje nie pokażą kodów przy ustawionym PIN-ie). |
-| [0.15.1](firmware/0.15.1/tomee-key-0.15.1.bin) | aplikacja | 7 | 2026-10-06 | `e1677a5bcded27bb…` | Tomee Key 0.15.1 — aktualizacja bezpieczeństwa kodów jednorazowych
-
-Kody TOTP/HOTP można teraz odczytać przez komputer tylko po podaniu PIN-u do klucza albo po dotknięciu klucza. Program działający w tle nie pobierze już kodów po cichu — ani bieżących, ani „na zapas” na przyszłość. Wpisywanie kodów gestem dotyku działa bez zmian, a logowanie kluczem (FIDO/SSH) pozostaje bez zmian.
-
-Zalecana aktualizacja. Do obsługi kodów w aplikacji potrzebny jest Tomee Manager 0.4.1 (starsze wersje nie pokażą kodów przy ustawionym PIN-ie). |
+| [0.15.1](firmware/0.15.1/tomee-key-0.15.1.bin) | aplikacja | 7 | 2026-10-06 | `e1677a5bcded27bb…` | Tomee Key 0.15.1 — aktualizacja bezpieczeństwa kodów jednorazowych<br><br>Kody TOTP/HOTP można teraz odczytać przez komputer tylko po podaniu PIN-u do klucza albo po dotknięciu klucza. Program działający w tle nie pobierze już kodów po cichu — ani bieżących, ani „na zapas” na przyszłość. Wpisywanie kodów gestem dotyku działa bez zmian, a logowanie kluczem (FIDO/SSH) pozostaje bez zmian.<br><br>Zalecana aktualizacja. Do obsługi kodów w aplikacji potrzebny jest Tomee Manager 0.4.1 (starsze wersje nie pokażą kodów przy ustawionym PIN-ie). |
 | [0.15.0](firmware/0.15.0/tomee-key-services-0.15.0.bin) | usługi bezpieczne | 1 | 2026-10-05 | `b009d0c24fb00b7f…` | Izolacja TrustZone: klucz urządzenia, klucze kont, podpisy, PIN, hmac-secret i sekrety kodów jednorazowych działają w strefie bezpiecznej mikrokontrolera, a część startowa jest chroniona przed zapisem i ukrywana po uruchomieniu; usługi bezpieczne aktualizowane osobno; dla kluczy z TrustZone (wymaga Tomee Manager 0.4.0) |
 | [0.15.0](firmware/0.15.0/tomee-key-0.15.0.bin) | aplikacja | 6 | 2026-10-05 | `a25e379549b165db…` | Izolacja TrustZone: klucz urządzenia, klucze kont, podpisy, PIN, hmac-secret i sekrety kodów jednorazowych działają w strefie bezpiecznej mikrokontrolera, a część startowa jest chroniona przed zapisem i ukrywana po uruchomieniu; usługi bezpieczne aktualizowane osobno; dla kluczy z TrustZone (wymaga Tomee Manager 0.4.0) |
 
