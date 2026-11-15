@@ -10,12 +10,13 @@ Parametry, standardy i architektura bezpieczeństwa: [SPECYFIKACJA.md](SPECYFIKA
 
 Aplikacja do zarządzania kluczem: PIN, passkeys, klucze SSH i aktualizacje firmware. Nie wymaga instalacji ani uprawnień administratora — pobierz plik `.exe` i uruchom.
 
-**Najnowsza wersja: [0.4.2](manager/0.4.2/TomeeManager-0.4.2.exe)** (2026-10-10)
+**Najnowsza wersja: [0.4.3](manager/0.4.3/TomeeManager-0.4.3.exe)** (2026-11-15)
 
 Plik nie ma jeszcze cyfrowego podpisu wydawcy, więc Windows SmartScreen może wyświetlić ostrzeżenie („Więcej informacji” → „Uruchom mimo to”). Przed uruchomieniem możesz porównać sumę SHA-256 z tabelą.
 
 | Wersja | Data | SHA-256 | Zmiany |
 |---|---|---|---|
+| [0.4.3](manager/0.4.3/TomeeManager-0.4.3.exe) | 2026-11-15 | `a4d599f602dd76f2…` | Tomee Manager 0.4.3 — tryb odzyskiwania<br><br>Obsługa trybu odzyskiwania kluczy z firmware 0.16.0. Gdy klucz nie uruchamia się poprawnie (np. po przerwanej aktualizacji), sam przechodzi w tryb odzyskiwania, a Manager pokazuje ekran „Tomee Key w trybie odzyskiwania”: pobranie i instalacja aktualnego firmware, wybór pliku albo uruchomienie klucza bez zmian. W zakładce Firmware można też włączyć tryb odzyskiwania ręcznie (wymaga dotknięcia). Klucz przyjmuje tylko firmware podpisany przez Tomee; PIN, passkeys, kody i klucze SSH zostają bez zmian. |
 | [0.4.2](manager/0.4.2/TomeeManager-0.4.2.exe) | 2026-10-10 | `ffddd2edf1e6351f…` | Tomee Manager 0.4.2<br><br>Aktualizacje rozróżniają składniki klucza z TrustZone: przycisk i powiadomienie mówią wprost, czy aktualizowana jest aplikacja, czy usługi bezpieczne. Zakładki Klucz i Firmware pokazują osobno wersje obu składników oraz ich wersje bezpieczeństwa. Po odłączeniu klucza informacja o dostępnej aktualizacji jest czyszczona. |
 | [0.4.1](manager/0.4.1/TomeeManager-0.4.1.exe) | 2026-10-06 | `85e5d498682e48f5…` | Tomee Manager 0.4.1<br><br>Zakładka Kody prosi o PIN raz na sesję — od firmware 0.15.1 kody jednorazowe są chronione PIN-em, więc żaden program w tle nie odczyta ich po cichu. Wpisywanie kodów gestem dotyku działa jak dotąd, bez PIN-u. Drobne usprawnienia odporności połączenia. |
 | [0.4.0](manager/0.4.0/TomeeManager-0.4.0.exe) | 2026-10-05 | `9af60a55e0bc68c2…` | Obsługa kluczy z izolacją TrustZone (firmware 0.15.0): Manager rozpoznaje rodzaj klucza, proponuje właściwe aktualizacje (aplikacja i usługi bezpieczne) i pokazuje wersję usług bezpiecznych; klucze bez TrustZone nadal dostają firmware 0.14.x |
@@ -46,5 +47,15 @@ Wersje firmware aplikacji i usług bezpiecznych mogą się różnić. Manager po
 | [0.15.1](firmware/0.15.1/tomee-key-0.15.1.bin) | aplikacja | 7 | 2026-10-06 | `e1677a5bcded27bb…` | Tomee Key 0.15.1 — aktualizacja bezpieczeństwa kodów jednorazowych<br><br>Kody TOTP/HOTP można teraz odczytać przez komputer tylko po podaniu PIN-u do klucza albo po dotknięciu klucza. Program działający w tle nie pobierze już kodów po cichu — ani bieżących, ani „na zapas” na przyszłość. Wpisywanie kodów gestem dotyku działa bez zmian, a logowanie kluczem (FIDO/SSH) pozostaje bez zmian.<br><br>Zalecana aktualizacja. Do obsługi kodów w aplikacji potrzebny jest Tomee Manager 0.4.1 (starsze wersje nie pokażą kodów przy ustawionym PIN-ie). |
 | [0.15.0](firmware/0.15.0/tomee-key-services-0.15.0.bin) | usługi bezpieczne | 1 | 2026-10-05 | `b009d0c24fb00b7f…` | Izolacja TrustZone: klucz urządzenia, klucze kont, podpisy, PIN, hmac-secret i sekrety kodów jednorazowych działają w strefie bezpiecznej mikrokontrolera, a część startowa jest chroniona przed zapisem i ukrywana po uruchomieniu; usługi bezpieczne aktualizowane osobno; dla kluczy z TrustZone (wymaga Tomee Manager 0.4.0) |
 | [0.15.0](firmware/0.15.0/tomee-key-0.15.0.bin) | aplikacja | 6 | 2026-10-05 | `a25e379549b165db…` | Izolacja TrustZone: klucz urządzenia, klucze kont, podpisy, PIN, hmac-secret i sekrety kodów jednorazowych działają w strefie bezpiecznej mikrokontrolera, a część startowa jest chroniona przed zapisem i ukrywana po uruchomieniu; usługi bezpieczne aktualizowane osobno; dla kluczy z TrustZone (wymaga Tomee Manager 0.4.0) |
+
+## Zestawy serwisowe (programowanie przez SWD)
+
+Zestaw serwisowy zawiera etap startowy, usługi bezpieczne i aplikację, wgrywane razem z konfiguracją pamięci przy przygotowaniu klucza w serwisie Tomee (programator ST-Link). Nie są to aktualizacje przez USB: Tomee Manager ich nie oferuje i nie instaluj ich pojedynczo na kluczu. Klucze serii pilotażowej z wersją 0.16.0 dostały je przy produkcji.
+
+| Wersja | Obraz | Wersja bezpieczeństwa | SHA-256 |
+|---|---|---|---|
+| [0.16.0](service/0.16.0/tomee-sboot-0.16.0.elf) | etap startowy | — | `7e3d58036b99c1e6111b90d5ca63bc6393d63a68aa6d32725f6fe883ce97b5e9` |
+| [0.16.0](service/0.16.0/tomee-key-services-0.16.0.bin) | usługi bezpieczne | 2 | `4aefbaa064d97726373de61af8fdfe54855f113f3ed1959c5851d1a53df2dbbb` |
+| [0.16.0](service/0.16.0/tomee-key-0.16.0.bin) | aplikacja | 8 | `02d503f5f7d44d66ce7e421b6d4bc00664e46037669858d7b3469fd0e77d8b21` |
 
 Pełne sumy SHA-256 są w pliku `SHA256SUMS` w katalogu każdej wersji.

@@ -1,5 +1,14 @@
 [
     {
+        "version":  "0.4.3",
+        "date":  "2026-11-15",
+        "file":  "manager/0.4.3/TomeeManager-0.4.3.exe",
+        "sha256":  "a4d599f602dd76f2289f815ffef813c0e69f134670d70f955cc8e2b9f5ecd0ab",
+        "signature":  "795e8c905ccb94b5940d3cbfc8938253706df50f5ae938179a69a985c20e021696d7c0fc89792a67b87a4a5ee458b147d3c5bc997518c64eb9aad52e80a81a05",
+        "notes":  "Tomee Manager 0.4.3 — tryb odzyskiwania\n\nObsługa trybu odzyskiwania kluczy z firmware 0.16.0. Gdy klucz nie uruchamia się poprawnie (np. po przerwanej aktualizacji), sam przechodzi w tryb odzyskiwania, a Manager pokazuje ekran „Tomee Key w trybie odzyskiwania”: pobranie i instalacja aktualnego firmware, wybór pliku albo uruchomienie klucza bez zmian. W zakładce Firmware można też włączyć tryb odzyskiwania ręcznie (wymaga dotknięcia). Klucz przyjmuje tylko firmware podpisany przez Tomee; PIN, passkeys, kody i klucze SSH zostają bez zmian.",
+        "source_commit":  "3fb0a24"
+    },
+    {
         "version":  "0.4.2",
         "date":  "2026-10-10",
         "file":  "manager/0.4.2/TomeeManager-0.4.2.exe",
