@@ -18,14 +18,15 @@ Do zarządzania kluczem służy bezpłatna aplikacja **Tomee Manager** dla Windo
 2. [Technologie i bezpieczeństwo](#2-technologie-i-bezpieczeństwo)
 3. [Wymagania](#3-wymagania)
 4. [Pierwsze uruchomienie](#4-pierwsze-uruchomienie)
-5. [Logowanie bez hasła — passkeys](#5-logowanie-bez-hasła--passkeys)
-6. [Kody jednorazowe (TOTP)](#6-kody-jednorazowe-totp)
-7. [Klucze SSH](#7-klucze-ssh)
-8. [Aktualizacje](#8-aktualizacje)
-9. [Sygnalizacja diodami](#9-sygnalizacja-diodami)
-10. [Rozwiązywanie problemów](#10-rozwiązywanie-problemów)
-11. [Dane techniczne](#11-dane-techniczne)
-12. [Kontakt](#12-kontakt)
+5. [Tomee Manager — zakładki](#5-tomee-manager--zakładki)
+6. [Logowanie bez hasła — passkeys](#6-logowanie-bez-hasła--passkeys)
+7. [Kody jednorazowe (TOTP)](#7-kody-jednorazowe-totp)
+8. [Klucze SSH](#8-klucze-ssh)
+9. [Aktualizacje](#9-aktualizacje)
+10. [Sygnalizacja diodami](#10-sygnalizacja-diodami)
+11. [Rozwiązywanie problemów](#11-rozwiązywanie-problemów)
+12. [Dane techniczne](#12-dane-techniczne)
+13. [Kontakt](#13-kontakt)
 
 ## 1. Co potrafi Tomee Key
 
@@ -116,7 +117,77 @@ Przycisk „Zidentyfikuj klucz” miga diodami wybranego klucza.*
 
 *Rys. 2. Zakładka PIN: ustawienie i zmiana PIN-u oraz liczba pozostałych prób.*
 
-## 5. Logowanie bez hasła — passkeys
+<!-- nowa-strona -->
+## 5. Tomee Manager — zakładki
+
+U góry okna widać nagłówek: numer seryjny i wersję podłączonego klucza oraz przyciski:
+
+- **Zidentyfikuj klucz** — diody klucza migną, gdy masz podłączonych kilka kluczy i chcesz wiedzieć, który jest który;
+- **Dostępna aktualizacja** (żółty, tylko gdy jest nowy firmware) — przenosi do zakładki **Firmware**;
+- **Nowa wersja aplikacji** (żółty, tylko gdy jest nowy Tomee Manager) — pobiera i instaluje nową wersję aplikacji.
+
+Gdy klucz czeka na dotknięcie, nad zakładkami pojawia się pasek **Dotknij klucza** (30 s) z przyciskiem **Anuluj**.
+
+**Klucz** — informacje o kluczu
+
+| Pole / opcja | Znaczenie |
+|---|---|
+| Firmware aplikacji, wersja bezpieczeństwa aplikacji | wersja oprogramowania klucza i jej poziom ochrony przed cofnięciem |
+| Usługi bezpieczne, wersja bezpieczeństwa usług | wersja części działającej w strefie bezpiecznej (klucze z TrustZone) |
+| Numer seryjny | podawaj go przy zgłoszeniach |
+| AAGUID, Standardy | identyfikator modelu i obsługiwane wersje FIDO |
+| PIN, Passkeys | czy PIN jest ustawiony i ile passkeys jest zapisanych |
+| Uruchamiaj Tomee Managera razem z Windows | aplikacja działa w tle (ikona **T** przy zegarze) i ustawia kluczowi czas — potrzebne do kodów TOTP wpisywanych dotykiem |
+
+**Kody** — kody jednorazowe (TOTP/HOTP). Po wejściu podaj PIN (raz na sesję). Lista pokazuje konta, bieżące kody
+i pasek czasu do następnej zmiany.
+
+| Przycisk | Działanie |
+|---|---|
+| Kopiuj kod (albo dwuklik) | kopiuje kod do schowka; kod konta z wymaganym dotknięciem pojawi się po dotknięciu klucza |
+| Dodaj konto… | nowe konto z klucza tekstowego lub linku `otpauth://` (rozdział 7) |
+| Gest… | przypisuje konto do 1, 2 lub 3 dotknięć albo przytrzymania; opcja Enter po kodzie |
+| Usuń… | usuwa konto z klucza (nieodwracalne — najpierw wyłącz kody w serwisie albo miej inny sposób logowania) |
+| Odśwież | ponownie wczytuje listę |
+
+**PIN** — ustawienie PIN-u (gdy go nie ma) albo zmiana (podaj obecny i nowy). Pokazuje liczbę pozostałych prób.
+PIN ma 4–63 znaki; po 8 błędnych próbach klucz trzeba zresetować.
+
+**Passkeys** — konta zapisane w kluczu, pogrupowane według serwisów, z poziomem ochrony. Lista jest widoczna
+po podaniu PIN-u (**Odblokuj**).
+
+| Przycisk | Działanie |
+|---|---|
+| Odśwież | ponownie wczytuje listę |
+| Zmień nazwę… | zmienia nazwę wyświetlaną konta |
+| Usuń… | usuwa passkey z klucza (nieodwracalne — najpierw usuń klucz w ustawieniach serwisu) |
+| Zablokuj | ukrywa listę do ponownego podania PIN-u |
+
+**SSH** — klucze SSH związane z Tomee Key (rozdział 8).
+
+| Element | Działanie |
+|---|---|
+| Nowy klucz SSH | nazwa i miejsce pliku; opcje **Zapisz klucz na Tomee Key** (do odtworzenia na innym komputerze) i **Wymagaj PIN-u przy każdym logowaniu**; **Utwórz klucz SSH** — Windows poprosi o PIN i dotknięcie |
+| Klucze SSH | lista kluczy na tym komputerze i zapisanych w Tomee Key; zaznaczony klucz pokazuje klucz publiczny |
+| Kopiuj / Zapisz klucz publiczny… | klucz publiczny do dodania na serwerze albo w GitHub/GitLab |
+| Wczytaj z Tomee Key, Zapisz plik klucza na tym komputerze… | odtworzenie klucza zapisanego w Tomee Key na nowym komputerze |
+
+**Firmware** — oprogramowanie klucza (rozdział 9).
+
+| Element | Działanie |
+|---|---|
+| Aktualizacje z internetu | **Sprawdź teraz**, **Pobierz** (sam plik) albo **Pobierz i zainstaluj** (z dotknięciem klucza) |
+| Plik z dysku | **Wybierz plik firmware…** i **Zainstaluj** — dla pliku `.bin` pobranego ze strony Tomee |
+| Tryb odzyskiwania | **Uruchom tryb odzyskiwania…** — ręczne ponowne wgranie firmware (klucze z firmware 0.16.0) |
+
+**Reset** — przywrócenie ustawień fabrycznych. Usuwa nieodwracalnie wszystkie passkeys, kody, PIN i klucz
+urządzenia; konta zarejestrowane tym kluczem (także klucze SSH) przestają działać. Zaznacz **Rozumiem, że tej
+operacji nie można cofnąć** → **Resetuj klucz…** → odłącz klucz, podłącz go ponownie i dotknij, gdy zamiga zielona
+dioda (klucz przyjmuje reset tylko przez 10 s od podłączenia). Potem ustaw nowy PIN.
+
+**Ikona przy zegarze** — prawy klik: **Otwórz Tomee Manager** albo **Zakończ** (całkowite wyłączenie aplikacji).
+
+## 6. Logowanie bez hasła — passkeys
 
 Większość dużych serwisów (Google, Microsoft, GitHub, Apple, Allegro i inne) pozwala dodać klucz bezpieczeństwa.
 
@@ -137,7 +208,7 @@ albo je usunąć — usunięcie jest nieodwracalne, więc najpierw usuń klucz w
 *Rys. 3. Zakładka Passkeys: konta zapisane w kluczu, pogrupowane według serwisów, z poziomem ochrony.*
 
 <!-- nowa-strona -->
-## 6. Kody jednorazowe (TOTP)
+## 7. Kody jednorazowe (TOTP)
 
 Tomee Key zastępuje aplikację z kodami w telefonie (Google Authenticator, Microsoft Authenticator itp.).
 
@@ -180,7 +251,7 @@ Palec trzymany dłużej niż 5 s niczego nie wpisuje, a przedmiot lub kropla wod
 *Rys. 6. Zakładka Kody: bieżące kody, pasek czasu do następnej zmiany i przypisane gesty.
 Kody kont z wymaganym dotknięciem są ukryte — pokaż je dwuklikiem i dotknięciem klucza.*
 
-## 7. Klucze SSH
+## 8. Klucze SSH
 
 Dla administratorów i programistów: klucz SSH, którego część prywatna jest związana z Tomee Key. Bez klucza
 w porcie USB nie da się go użyć, nawet jeśli ktoś skopiuje pliki z komputera.
@@ -197,7 +268,7 @@ Opcja **Zapisz klucz na Tomee Key** pozwala odtworzyć klucz na innym komputerze
 
 *Rys. 7. Zakładka SSH: tworzenie kluczy, lista kluczy na komputerze i w Tomee Key, klucz publiczny do skopiowania.*
 
-## 8. Aktualizacje
+## 9. Aktualizacje
 
 Tomee Manager sam sprawdza nowe wersje:
 
@@ -229,7 +300,7 @@ uruchomić się normalnie.
 
 *Rys. 8. Zakładka Firmware z dostępną aktualizacją. Klucz przyjmuje tylko firmware podpisany przez Tomee.*
 
-## 9. Sygnalizacja diodami
+## 10. Sygnalizacja diodami
 
 | Dioda | Znaczenie |
 |---|---|
@@ -240,18 +311,18 @@ uruchomić się normalnie.
 | 2 zielone mrugnięcia | kod został wpisany |
 | 3 czerwone mrugnięcia | kod nie został wpisany: gest nie ma przypisanego konta albo Tomee Manager nie działa |
 | czerwona i zielona na zmianę | „Zidentyfikuj klucz” w aplikacji albo instalacja aktualizacji |
-| czerwona i zielona na zmianę bez przerwy, Tomee Manager pokazuje tryb odzyskiwania | tryb odzyskiwania — zob. rozdział [Aktualizacje](#8-aktualizacje) |
+| czerwona i zielona na zmianę bez przerwy, Tomee Manager pokazuje tryb odzyskiwania | tryb odzyskiwania — zob. rozdział [Aktualizacje](#9-aktualizacje) |
 | czerwona świeci stale | błąd klucza — odłącz go i podłącz ponownie; jeśli wraca, zgłoś problem |
 | czerwona miga wolno bez przerwy | brak poprawnego firmware, którego nie da się odzyskać przez USB — zgłoś problem |
 
-## 10. Rozwiązywanie problemów
+## 11. Rozwiązywanie problemów
 
 | Problem | Rozwiązanie |
 |---|---|
 | Tomee Manager nie widzi klucza | podłącz klucz ponownie, najlepiej bezpośrednio do komputera (bez rozgałęźnika) |
 | „Zbyt wiele błędnych prób z rzędu” | odłącz i podłącz klucz, spróbuj ponownie |
 | Zapomniany PIN albo „PIN zablokowany” | jedyne wyjście to zakładka **Reset** — kasuje wszystkie konta, kody i klucze SSH; potem zaloguj się do serwisów innym sposobem i dodaj klucz od nowa |
-| Klucz nie działa po przerwanej aktualizacji | uruchom Tomee Manager 0.4.3 lub nowszy i podłącz klucz — po trzech nieudanych startach przejdzie w tryb odzyskiwania (rozdział [Aktualizacje](#8-aktualizacje)) |
+| Klucz nie działa po przerwanej aktualizacji | uruchom Tomee Manager 0.4.3 lub nowszy i podłącz klucz — po trzech nieudanych startach przejdzie w tryb odzyskiwania (rozdział [Aktualizacje](#9-aktualizacje)) |
 | Zakładka Kody prosi o PIN albo nie pokazuje kodów | ustaw PIN w zakładce **PIN** i odblokuj kody — od firmware 0.15.1 kody w aplikacji są chronione PIN-em |
 | „To konto kodów pochodzi sprzed aktualizacji bezpieczeństwa” | usuń to konto w zakładce **Kody** i dodaj je ponownie (ten sam klucz tekstowy z serwisu albo nowy) |
 | Serwis nie przyjmuje kodu TOTP | sprawdź zegar Windows: Ustawienia → Czas i język → **Synchronizuj teraz** |
@@ -259,7 +330,7 @@ uruchomić się normalnie.
 | Windows blokuje uruchomienie aplikacji | kliknij **Więcej informacji → Uruchom mimo to**; sumę SHA-256 pliku możesz porównać z tabelą na stronie pobierania |
 | Zgubiony klucz | zaloguj się do serwisów innym sposobem (telefon, kody zapasowe), usuń Tomee Key z ustawień bezpieczeństwa i zgłoś zgubienie |
 
-## 11. Dane techniczne
+## 12. Dane techniczne
 
 | Parametr | Wartość |
 |---|---|
@@ -278,7 +349,7 @@ uruchomić się normalnie.
 | Aktualizacje | podpisane obrazy (ECDSA P-256 + SHA-256), ochrona przed cofnięciem wersji, tryb odzyskiwania |
 | Oprogramowanie | firmware 0.16.0 (seria pilotażowa) lub 0.15.x, Tomee Manager 0.4.3 dla Windows 10/11 |
 
-## 12. Kontakt
+## 13. Kontakt
 
 Pytania, uwagi i zgłoszenia problemów: **biuro@tomee.pl**.
 Najnowsze wersje aplikacji, firmware i tej instrukcji:
