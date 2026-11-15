@@ -10,7 +10,7 @@ Do zarządzania kluczem służy bezpłatna aplikacja **Tomee Manager** dla Windo
 > jako **dodatkowy** sposób logowania i zachowaj dotychczasowy (telefon, kody zapasowe).
 > Uwagi i problemy zgłaszaj na **biuro@tomee.pl**.
 
-*Dotyczy: firmware 0.14.4 i 0.15.0 (z izolacją TrustZone) · Tomee Manager 0.4.0 · październik 2026*
+*Dotyczy: firmware 0.16.0 (klucze serii pilotażowej) oraz 0.15.x · Tomee Manager 0.4.3 · listopad 2026*
 
 ## Spis treści
 
@@ -35,7 +35,9 @@ Do zarządzania kluczem służy bezpłatna aplikacja **Tomee Manager** dla Windo
   klucza: każdemu kontu możesz przypisać własny gest (1, 2 lub 3 dotknięcia albo przytrzymanie).
 - **Klucze SSH** — logowanie do serwerów i GitHub/GitLab kluczem sprzętowym (standard OpenSSH `sk-ecdsa`).
 - **PIN** — chroni konta, gdyby klucz wpadł w niepowołane ręce.
-- **Aktualizacje przez internet** — nowy firmware i nowa wersja aplikacji instalują się jednym kliknięciem.
+- **Aktualizacje przez internet** — nowy firmware i nowa wersja aplikacji instalują się jednym kliknięciem,
+  a gdyby coś poszło nie tak, klucz sam przechodzi w tryb odzyskiwania.
+- **Odporna obudowa** — elektronika klucza jest zalana żywicą; dotyk i diody działają przez żywicę.
 
 <!-- nowa-strona -->
 ## 2. Technologie i bezpieczeństwo
@@ -66,17 +68,20 @@ i systemy operacyjne.
 - **Sprzętowy generator liczb losowych (TRNG)** tworzy tajny klucz urządzenia i wszystkie jednorazowe wartości.
 - **Sekrety kodów jednorazowych** są zapisywane w kluczu i nie da się ich z niego odczytać — klucz podaje tylko
   gotowe kody.
-- **Bezpieczne aktualizacje.** Bootloader sprawdza podpis i sumę SHA-256 każdego obrazu przed instalacją
+- **Bezpieczne aktualizacje.** Klucz sprawdza podpis i sumę SHA-256 każdego obrazu przed instalacją
   i nie pozwala wrócić do wersji ze znanymi błędami bezpieczeństwa (ochrona przed cofnięciem wersji).
+- **Izolacja TrustZone i blokada odczytu.** Klucz urządzenia, PIN, podpisy i sekrety kodów działają w wydzielonej
+  strefie bezpiecznej mikrokontrolera. Pamięci klucza nie da się odczytać przez złącze serwisowe (blokada RDP 1),
+  a po zalaniu żywicą złącze jest fizycznie niedostępne.
 - **Osobny kanał zarządzania.** Tomee Manager komunikuje się z kluczem przez oddzielny interfejs, który nie
   pozwala logować się do serwisów. Dlatego aplikacja nie potrzebuje uprawnień administratora.
 - **Wpisywanie kodów.** Klucz wpisuje wyłącznie cyfry kodu (opcjonalnie z klawiszem Enter) i tylko po
   Twoim geście.
 
-> **Status produktu.** Tomee Key nie przeszedł jeszcze certyfikacji FIDO Alliance. W serii pilotażowej
-> nie jest też włączona sprzętowa blokada odczytu pamięci — osoba z fizycznym dostępem do klucza i specjalistycznym
-> sprzętem mogłaby odczytać jego zawartość. Nie przechowuj na egzemplarzu pilotażowym jedynego zabezpieczenia
-> kont o krytycznym znaczeniu.
+> **Status produktu.** Tomee Key nie przeszedł jeszcze certyfikacji FIDO Alliance, a atestacja nie ma jeszcze
+> certyfikatu producenta. Klucze serii pilotażowej z firmware 0.16.0 mają włączoną blokadę odczytu pamięci
+> poziomu 1; trwały poziom 2 jest planowany w wersji produkcyjnej. Nie przechowuj na egzemplarzu pilotażowym
+> jedynego zabezpieczenia kont o krytycznym znaczeniu.
 
 ## 3. Wymagania
 
@@ -98,6 +103,7 @@ i systemy operacyjne.
 2. Podłącz klucz. Czerwona dioda miga przez ok. 3 s — klucz się uruchamia. Po chwili w nagłówku aplikacji
    pojawi się numer seryjny i wersja firmware.
 3. Zakładka **PIN** → ustaw PIN (4–63 znaki). Zapamiętaj go — po 8 błędnych próbach klucz trzeba wyczyścić.
+   PIN jest potrzebny także do zakładki **Kody** (dodawanie kont i podgląd kodów w aplikacji).
 4. Zostaw zaznaczoną opcję **Uruchamiaj Tomee Managera razem z Windows**. Aplikacja działa w tle (ikona **T**
    przy zegarze). Zamknięcie okna jej nie wyłącza — całkiem wyłączysz ją prawym klikiem na ikonie → **Zakończ**.
 
@@ -201,7 +207,23 @@ Tomee Manager sam sprawdza nowe wersje:
 - **Klucze z izolacją TrustZone** (firmware 0.15.0 i nowsze; w nagłówku widać „usługi bezpieczne”) mają dwa
   osobno aktualizowane składniki: aplikację i usługi bezpieczne. Tomee Manager proponuje je po kolei — po pierwszej
   instalacji sprawdź aktualizacje jeszcze raz. Przejście klucza na wersję z TrustZone wykonuje Tomee.
-- **Aplikacja** — przycisk **Nowa wersja aplikacji** → **Tak**. Program pobierze nową wersję i sam się podmieni.
+- **Aplikacja** — przycisk **Nowa wersja aplikacji** → **Tak**. Program pobierze nową wersję, sprawdzi jej podpis
+  i sam się podmieni.
+
+**Tryb odzyskiwania** (klucze z firmware 0.16.0, Tomee Manager 0.4.3 lub nowszy)
+
+Jeśli klucz nie uruchomi się poprawnie trzy razy z rzędu (np. aktualizację przerwało wyjęcie klucza), sam przechodzi
+w tryb odzyskiwania: czerwona i zielona dioda migają na zmianę, a Tomee Manager pokazuje ekran
+**Tomee Key w trybie odzyskiwania**. Wybierz:
+
+- **Pobierz i zainstaluj aktualny firmware** — zalecane; nie odłączaj klucza podczas instalacji;
+- **Wybierz plik firmware…** — plik `.bin` pobrany wcześniej ze strony Tomee;
+- **Uruchom klucz bez zmian** — klucz wraca do normalnej pracy.
+
+Tryb odzyskiwania można też włączyć ręcznie: zakładka **Firmware** → **Uruchom tryb odzyskiwania…** → dotknij klucza.
+PIN, passkeys, kody i klucze SSH zostają bez zmian, a klucz przyjmuje wyłącznie firmware podpisany przez Tomee.
+Gdy Tomee Manager nie jest uruchomiony, klucz po kilkunastu sekundach (najpóźniej po minucie) sam próbuje
+uruchomić się normalnie.
 
 ![Tomee Manager — zakładka Firmware](docs/img/firmware.png)
 
@@ -218,8 +240,9 @@ Tomee Manager sam sprawdza nowe wersje:
 | 2 zielone mrugnięcia | kod został wpisany |
 | 3 czerwone mrugnięcia | kod nie został wpisany: gest nie ma przypisanego konta albo Tomee Manager nie działa |
 | czerwona i zielona na zmianę | „Zidentyfikuj klucz” w aplikacji albo instalacja aktualizacji |
+| czerwona i zielona na zmianę bez przerwy, Tomee Manager pokazuje tryb odzyskiwania | tryb odzyskiwania — zob. rozdział [Aktualizacje](#8-aktualizacje) |
 | czerwona świeci stale | błąd klucza — odłącz go i podłącz ponownie; jeśli wraca, zgłoś problem |
-| czerwona miga wolno bez przerwy | brak poprawnego firmware (np. przerwana aktualizacja) — zgłoś problem |
+| czerwona miga wolno bez przerwy | brak poprawnego firmware, którego nie da się odzyskać przez USB — zgłoś problem |
 
 ## 10. Rozwiązywanie problemów
 
@@ -228,6 +251,9 @@ Tomee Manager sam sprawdza nowe wersje:
 | Tomee Manager nie widzi klucza | podłącz klucz ponownie, najlepiej bezpośrednio do komputera (bez rozgałęźnika) |
 | „Zbyt wiele błędnych prób z rzędu” | odłącz i podłącz klucz, spróbuj ponownie |
 | Zapomniany PIN albo „PIN zablokowany” | jedyne wyjście to zakładka **Reset** — kasuje wszystkie konta, kody i klucze SSH; potem zaloguj się do serwisów innym sposobem i dodaj klucz od nowa |
+| Klucz nie działa po przerwanej aktualizacji | uruchom Tomee Manager 0.4.3 lub nowszy i podłącz klucz — po trzech nieudanych startach przejdzie w tryb odzyskiwania (rozdział [Aktualizacje](#8-aktualizacje)) |
+| Zakładka Kody prosi o PIN albo nie pokazuje kodów | ustaw PIN w zakładce **PIN** i odblokuj kody — od firmware 0.15.1 kody w aplikacji są chronione PIN-em |
+| „To konto kodów pochodzi sprzed aktualizacji bezpieczeństwa” | usuń to konto w zakładce **Kody** i dodaj je ponownie (ten sam klucz tekstowy z serwisu albo nowy) |
 | Serwis nie przyjmuje kodu TOTP | sprawdź zegar Windows: Ustawienia → Czas i język → **Synchronizuj teraz** |
 | Dotyk nie wpisuje kodu (3 czerwone mrugnięcia) | sprawdź, czy ikona **T** jest przy zegarze i czy konto ma przypisany gest |
 | Windows blokuje uruchomienie aplikacji | kliknij **Więcej informacji → Uruchom mimo to**; sumę SHA-256 pliku możesz porównać z tabelą na stronie pobierania |
@@ -246,8 +272,11 @@ Tomee Manager sam sprawdza nowe wersje:
 | PIN | 4–63 znaki; 3 próby z rzędu na podłączenie, 8 prób łącznie |
 | Interfejs | USB 2.0 Full Speed, klasa HID (bez sterowników): FIDO, zarządzanie, klawiatura |
 | Obsługa | pojemnościowe pole dotykowe, dwie diody (czerwona i zielona) |
-| Aktualizacje | podpisane obrazy (ECDSA P-256 + SHA-256), ochrona przed cofnięciem wersji |
-| Oprogramowanie | firmware 0.14.4 lub 0.15.0 (z izolacją TrustZone), Tomee Manager 0.4.0 dla Windows 10/11 |
+| Złącze | USB-C |
+| Obudowa | elektronika zalana żywicą (seria pilotażowa) |
+| Ochrona | izolacja Arm TrustZone, blokada odczytu pamięci RDP 1 |
+| Aktualizacje | podpisane obrazy (ECDSA P-256 + SHA-256), ochrona przed cofnięciem wersji, tryb odzyskiwania |
+| Oprogramowanie | firmware 0.16.0 (seria pilotażowa) lub 0.15.x, Tomee Manager 0.4.3 dla Windows 10/11 |
 
 ## 12. Kontakt
 

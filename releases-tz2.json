@@ -1,0 +1,20 @@
+[
+    {
+        "version": "0.16.0",
+        "kind": "services",
+        "security_version": 2,
+        "date": "2026-11-13",
+        "file": "service/0.16.0/tomee-key-services-0.16.0.bin",
+        "sha256": "4aefbaa064d97726373de61af8fdfe54855f113f3ed1959c5851d1a53df2dbbb",
+        "notes": "Tomee Key 0.16.0 — klucze serii pilotażowej przygotowane przez Tomee\n\nTryb odzyskiwania: gdy klucz nie uruchomi się poprawnie 3 razy z rzędu (np. po przerwanej aktualizacji), sam przechodzi w tryb odzyskiwania, a Tomee Manager 0.4.3 pozwala wgrać firmware ponownie. Obrazy podpisane kluczami wydania Tomee. Wzmocnienia bezpieczeństwa: potwierdzenie dotykiem i PIN-em sprawdzane w strefie bezpiecznej, uwierzytelnione szyfrowanie sekretów kodów jednorazowych, trwałe minimalne wersje bezpieczeństwa, odporność na uszkodzenie danych. Wgrywane tylko przy przygotowaniu klucza w serwisie Tomee."
+    },
+    {
+        "version": "0.16.0",
+        "kind": "app",
+        "security_version": 8,
+        "date": "2026-11-13",
+        "file": "service/0.16.0/tomee-key-0.16.0.bin",
+        "sha256": "02d503f5f7d44d66ce7e421b6d4bc00664e46037669858d7b3469fd0e77d8b21",
+        "notes": "Tomee Key 0.16.0 — klucze serii pilotażowej przygotowane przez Tomee\n\nTryb odzyskiwania: gdy klucz nie uruchomi się poprawnie 3 razy z rzędu (np. po przerwanej aktualizacji), sam przechodzi w tryb odzyskiwania, a Tomee Manager 0.4.3 pozwala wgrać firmware ponownie. Obrazy podpisane kluczami wydania Tomee. Wzmocnienia bezpieczeństwa: potwierdzenie dotykiem i PIN-em sprawdzane w strefie bezpiecznej, uwierzytelnione szyfrowanie sekretów kodów jednorazowych, trwałe minimalne wersje bezpieczeństwa, odporność na uszkodzenie danych. Wgrywane tylko przy przygotowaniu klucza w serwisie Tomee."
+    }
+]

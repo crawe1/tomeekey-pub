@@ -9,7 +9,7 @@ bezpieczeństwa urządzenia oraz aplikacji Tomee Manager.
 > **Program pilotażowy.** Specyfikacja dotyczy serii testowej. Parametry wersji produkcyjnej mogą się różnić —
 > ograniczenia serii pilotażowej zebrano w rozdziale [Status i plan rozwoju](#12-status-i-plan-rozwoju).
 
-*Dotyczy: firmware 0.14.4 i 0.15.0 (z izolacją TrustZone) · Tomee Manager 0.4.0 · październik 2026*
+*Dotyczy: firmware 0.16.0 (klucze serii pilotażowej) oraz 0.15.x · Tomee Manager 0.4.3 · listopad 2026*
 
 ## Spis treści
 
@@ -39,7 +39,8 @@ bezpieczeństwa urządzenia oraz aplikacji Tomee Manager.
 | **Kryptografia** | ECDSA i ECDH P-256 oraz AES-256 w akceleratorach sprzętowych, sprzętowy generator liczb losowych |
 | **Połączenie** | USB 2.0 Full Speed, klasa HID — bez sterowników |
 | **Zarządzanie** | Tomee Manager dla Windows, bez uprawnień administratora |
-| **Aktualizacje** | podpisane cyfrowo, instalowane przez internet, z ochroną przed cofnięciem wersji |
+| **Aktualizacje** | podpisane cyfrowo, instalowane przez internet, z ochroną przed cofnięciem wersji i trybem odzyskiwania |
+| **Ochrona sprzętowa** | izolacja Arm TrustZone, blokada odczytu pamięci (RDP 1), elektronika zalana żywicą |
 
 <!-- nowa-strona -->
 ## 2. Zgodność ze standardami
@@ -107,7 +108,9 @@ stronie nie jest ważny w prawdziwym serwisie (ochrona przed phishingiem).
 - token PIN wygasa po 60 s bezczynności i najpóźniej po 10 minutach.
 
 **Obecność użytkownika.** Rejestracja, logowanie, reset i aktualizacja wymagają dotknięcia klucza (limit 30 s).
-Reset do ustawień fabrycznych jest możliwy tylko w ciągu 10 s od podłączenia i po dotknięciu.
+Reset do ustawień fabrycznych jest możliwy tylko w ciągu 10 s od podłączenia i po dotknięciu. Od firmware 0.16.0
+potwierdzenie dotykiem i PIN-em sprawdzają same usługi bezpieczne: zgoda jest związana z serwisem i operacją,
+a jej ważność odmierza sprzętowy zegar strefy bezpiecznej, niezależny od aplikacji.
 
 **Czujnik dotyku.** Pojemnościowe pole z kalibracją przy starcie i śledzeniem dryfu otoczenia. Palec, który leżał
 na polu przed żądaniem, musi się najpierw oderwać — dopiero kolejne dotknięcie potwierdza operację. „Dotyk”
@@ -122,7 +125,9 @@ ten odrzuca rejestrację i logowanie, a tokeny PIN wydaje tylko z uprawnieniem z
 aplikacja działa bez uprawnień administratora, a przejęty proces aplikacji nie może logować się do serwisów.
 
 **Kody jednorazowe.** Sekrety kont są zapisywane w kluczu i nie ma polecenia, które by je odczytało — klucz zwraca
-wyłącznie gotowe kody. Dodawanie, usuwanie i zmiana gestów wymagają PIN-u, jeśli jest ustawiony.
+wyłącznie gotowe kody. Sekrety są szyfrowane i uwierzytelniane (AES-256 i HMAC-SHA-256) kluczem dostępnym tylko
+w strefie bezpiecznej; zmieniony rekord jest odrzucany. Odczyt kodów i zarządzanie kontami przez Tomee Manager
+wymagają PIN-u (konto z wymaganym dotknięciem — także dotknięcia); gesty na kluczu działają bez PIN-u.
 
 **Wpisywanie kodów.** Interfejs klawiatury wysyła wyłącznie cyfry kodu i opcjonalnie klawisz Enter, tylko po
 geście wykonanym na kluczu. Przytrzymanie wpisuje kod dopiero po puszczeniu palca, a gesty są wstrzymane
@@ -132,11 +137,17 @@ przez 1 s po uruchomieniu i po błędzie czujnika.
 zapis nie uszkadza wcześniej zapisanych danych, a zamiana rekordu przerwana wyjęciem klucza jest dokańczana przy
 następnym uruchomieniu, więc kod HOTP nigdy nie jest wydany dwa razy. Klucz nie rozpoczyna zapisu, gdy napięcie
 zasilania spada poniżej ok. 2,8 V (detektor PVD). Testy: 30 wyjęć klucza w trakcie zapisu kodów (3586 zapisów)
-i 15 w trakcie zapisu passkeys (929 zamian) — bez utraty ani zdublowania danych.
+i 15 w trakcie zapisu passkeys (929 zamian) — bez utraty ani zdublowania danych. Uszkodzony zapis klucza
+urządzenia lub licznika prób PIN-u nie powoduje cichego utworzenia nowych danych — klucz odmawia działania
+zamiast np. zerować licznik prób.
 
-**Ochrona oprogramowania przed zapisem.** Każdy zapis i kasowanie pamięci Flash jest sprawdzany pod kątem zakresu;
-aplikacja przy starcie blokuje dla siebie obszar bootloadera i własnego obrazu, więc żaden błąd osiągalny przez
-USB nie może ich zmienić. Aktualizację instaluje wyłącznie bootloader, po sprawdzeniu podpisu.
+**Ochrona oprogramowania przed zapisem.** Każdy zapis i kasowanie pamięci Flash jest sprawdzany pod kątem zakresu.
+Etap startowy jest chroniony przed zapisem i po uruchomieniu ukrywany sprzętowo; aplikacja (strefa zwykła) nie ma
+dostępu do pamięci strefy bezpiecznej. Aktualizację instaluje wyłącznie etap startowy, po sprawdzeniu podpisu.
+
+**Blokada odczytu pamięci.** Klucze serii pilotażowej z firmware 0.16.0 mają włączoną sprzętową blokadę odczytu
+(RDP poziom 1): przez złącze serwisowe nie da się odczytać pamięci Flash, a strefa bezpieczna jest niedostępna
+z zewnątrz. Na kluczach zalanych żywicą złącze serwisowe jest dodatkowo fizycznie niedostępne.
 
 ## 5. Sprzęt
 
@@ -149,8 +160,11 @@ USB nie może ich zmienić. Aktualizację instaluje wyłącznie bootloader, po s
 | Obsługa | pojemnościowe pole dotykowe (kontroler TSC) |
 | Sygnalizacja | dwie diody LED: czerwona i zielona |
 | Zasilanie | z portu USB |
-| Złącze serwisowe | SWD — wyłącznie do produkcji i serwisu |
-| Wymiary, obudowa, złącze USB | zostaną podane dla wersji produkcyjnej |
+| Złącze USB | USB-C (wtyk) |
+| Płytka | 30 × 12 mm |
+| Obudowa (seria pilotażowa) | elektronika zalana żywicą; dotyk i diody działają przez żywicę |
+| Złącze serwisowe | SWD — wyłącznie do przygotowania klucza w serwisie; po zalaniu niedostępne |
+| Wymiary obudowy | zostaną podane dla wersji produkcyjnej |
 
 ## 6. Interfejs USB
 
@@ -197,15 +211,18 @@ Dane użytkownika (konta, kody, PIN) są zachowywane przy aktualizacjach firmwar
 
 | Parametr | Wartość |
 |---|---|
-| Architektura | bootloader (32 KB) + aplikacja w osobnym obszarze pamięci |
+| Architektura (od 0.15.0) | etap startowy (32 KB, strefa bezpieczna) + usługi bezpieczne + aplikacja (strefa zwykła); usługi i aplikacja aktualizowane osobno |
 | Format obrazu | nagłówek z podpisem ECDSA P-256, skrótem SHA-256 i wersją bezpieczeństwa |
-| Weryfikacja | podpis i skrót sprawdzane przed instalacją i przy każdym uruchomieniu — w bootloaderze od 0.14.4 dwukrotnie, z losowym odstępem (odporność na zakłócenia) |
+| Klucze podpisu (od 0.16.0) | dwa klucze wydania Tomee — główny i zapasowy — przechowywane offline; klucz przyjmuje obraz podpisany jednym z nich |
+| Weryfikacja | podpis i skrót sprawdzane przed instalacją i przy każdym uruchomieniu — dwukrotnie, z losowym odstępem (odporność na zakłócenia) |
 | Nieudana instalacja | gdy instalacja nie może się rozpocząć, klucz uruchamia dotychczasowy firmware i ponawia próbę przy kolejnym starcie |
-| Ochrona przed cofnięciem wersji | klucz odrzuca obraz z niższą wersją bezpieczeństwa niż zainstalowana |
-| Instalacja | obraz trafia najpierw do obszaru tymczasowego (do 176 KB), kopiowanie po pełnej weryfikacji |
+| Ochrona przed cofnięciem wersji | klucz odrzuca obraz z niższą wersją bezpieczeństwa; od 0.16.0 minimalne wersje są zapisane trwale w strefie bezpiecznej i obowiązują także wtedy, gdy zainstalowany obraz jest uszkodzony |
+| Tryb odzyskiwania (od 0.16.0) | po 3 kolejnych uruchomieniach bez poprawnego połączenia USB, bez poprawnego obrazu albo na żądanie (Tomee Manager + dotknięcie) etap startowy uruchamia osobne urządzenie USB do ponownego wgrania podpisanego firmware; dane użytkownika zostają |
+| Instalacja | obraz trafia najpierw do obszaru tymczasowego (do 174 KB), kopiowanie po pełnej weryfikacji |
 | Potwierdzenie | dotknięcie klucza przed rozpoczęciem aktualizacji |
 | Kanały | Tomee Manager (automatyczne sprawdzanie) lub plik `.bin` wybrany ręcznie |
 | Dystrybucja | [github.com/crawe1/tomeekey-pub](https://github.com/crawe1/tomeekey-pub) z sumami SHA-256 |
+| Aktualizacje Tomee Manager | manifest podpisany niezależnym kluczem Ed25519 (od 0.4.2) — aplikacja nie zainstaluje podmienionego pliku |
 
 ## 10. Tomee Manager
 
@@ -217,6 +234,7 @@ Dane użytkownika (konta, kody, PIN) są zachowywane przy aktualizacjach firmwar
 | Kody | dodawanie kont (`otpauth://` lub ręcznie), kopiowanie kodów, przypisywanie gestów |
 | SSH | tworzenie kluczy, eksport klucza publicznego, odtwarzanie kluczy rezydentnych na nowym komputerze |
 | Firmware | sprawdzanie, pobieranie i instalacja aktualizacji |
+| Tryb odzyskiwania | ponowne wgranie firmware, gdy klucz nie uruchamia się poprawnie (od 0.4.3, klucze z firmware 0.16.0) |
 | Reset | przywrócenie ustawień fabrycznych |
 | Praca w tle | ikona w zasobniku systemowym, autostart, ustawianie czasu klucza |
 | Samoaktualizacja | pobieranie nowych wersji aplikacji |
@@ -245,15 +263,14 @@ obsługiwane są klucze FIDO2 przez USB.
 Seria pilotażowa ma następujące ograniczenia:
 
 - brak certyfikacji FIDO Alliance;
-- sprzętowa blokada odczytu pamięci (RDP) nie jest włączona — osoba z fizycznym dostępem i specjalistycznym
-  sprzętem mogłaby odczytać zawartość klucza;
+- blokada odczytu pamięci działa na poziomie 1 (RDP 1); trwały poziom 2 jest planowany w wersji produkcyjnej;
 - atestacja samopodpisana, bez certyfikatu producenta; identyfikator modelu (AAGUID) prototypowy;
 - brak obsługi starszego protokołu U2F (CTAP 1);
 - tymczasowe identyfikatory USB;
 - klucz nie ma własnego zegara — kody TOTP wpisywane gestem wymagają działającego Tomee Managera;
 - aplikacja Tomee Manager nie jest jeszcze podpisana cyfrowo (ostrzeżenie Windows SmartScreen).
 
-Planowane w wersji produkcyjnej: włączenie blokady odczytu pamięci, atestacja z certyfikatem producenta, obsługa U2F,
+Planowane w wersji produkcyjnej: blokada odczytu pamięci poziomu 2, atestacja z certyfikatem producenta, obsługa U2F,
 certyfikacja FIDO oraz podpisana cyfrowo aplikacja.
 
 **Izolacja TrustZone — od firmware 0.15.0** (5 października 2026). Klucze serii pilotażowej dostają ją przy
@@ -268,8 +285,14 @@ i poleceń) nie ma dostępu do danych strefy bezpiecznej, nawet gdyby zawierał 
 | 4 | sekrety kodów jednorazowych w strefie bezpiecznej — po dodaniu konta aplikacja przechowuje tylko zaszyfrowany sekret i nie ma klucza, by go odczytać | zakończony |
 | 5 | aktualizacje strefy bezpiecznej przez USB (podpisane, z osobną wersją bezpieczeństwa) | zakończony |
 | 5b | ochrona zapisu i ukrycie części startowej po uruchomieniu | zakończony |
-| 5c | blokada odczytu pamięci z izolacją TrustZone (sprawdzona na egzemplarzu testowym; włączana przy produkcji) | zakończony |
+| 5c | blokada odczytu pamięci (RDP 1) z izolacją TrustZone — włączona na kluczach pilota 0.16.0 | zakończony |
 | 6 | przeniesienie danych kluczy już używanych (konta, PIN, kody) do nowej wersji | zakończony |
+| 7 | potwierdzenie dotykiem i PIN-em sprawdzane w strefie bezpiecznej, uwierzytelnione szyfrowanie sekretów kodów, trwałe minimalne wersje (0.16.0) | zakończony |
+| 8 | tryb odzyskiwania przez USB i klucze podpisu wydania (0.16.0) — warunek zalania elektroniki żywicą | zakończony |
+
+**Seria pilotażowa 0.16.0** (listopad 2026): klucze przygotowane w serwisie Tomee z etapem startowym z kluczami
+wydania, TrustZone i blokadą odczytu RDP 1, następnie zalane żywicą. Po zalaniu każdy klucz sprawdzono przez USB:
+odpowiedź klucza, dotyk przez żywicę, wejście w tryb odzyskiwania i powrót do pracy.
 
 Każdy etap przechodzi pełny zestaw testów (FIDO2, PIN, passkeys, kody, gesty, aktualizacje, wyjmowanie klucza
 w trakcie zapisu, testy losowymi danymi). Po każdym etapie i po przeniesieniu danych dotychczasowe konta, PIN,
